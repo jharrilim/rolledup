@@ -12,9 +12,13 @@
   "author": "Joseph Harrison-Lim",
   "license": "GPL-3.0",
   "dependencies": {
+    "@babel/preset-env": "^7.11.5",
+    "@rollup/plugin-babel": "^5.2.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
     "jsdom": "^16.4.0",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "rollup": "^2.26.9"
   },
   "devDependencies": {
     "@babel/core": "^7.11.5",
