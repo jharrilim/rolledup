@@ -30,4 +30,4 @@ ${demoStr}
 
 root.innerHTML = ctx;
 
-fs.writeFileSync(join(__dirname, 'demo.html'));
+fs.writeFileSync(join(__dirname, 'demo.html'), dom.serialize());
