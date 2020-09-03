@@ -1,0 +1,19 @@
+{
+  "name": "vssr",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ssr"
+  ],
+  "author": "Joseph Harrison-Lim",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "jsdom": "^16.4.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}
