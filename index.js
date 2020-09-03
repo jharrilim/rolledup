@@ -19,7 +19,9 @@ const ctx = vm.runInNewContext(`
 ${demoStr}
 `,
     {
+        ...dom.window,
         window: dom.window,
+        globalThis: dom.window,
         ReactDOMServer,
         React,
     },
