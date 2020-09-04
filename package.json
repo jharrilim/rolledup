@@ -1,5 +1,5 @@
 {
-  "name": "vssr",
+  "name": "rolledup",
   "version": "0.1.0",
   "description": "React SSR with support for browser globals/window.",
   "main": "index.js",
@@ -27,5 +27,8 @@
   "devDependencies": {
     "@babel/core": "^7.11.5",
     "@babel/preset-react": "^7.10.4"
-  }
+  },
+  "files": [
+    "index.js"
+  ]
 }
