@@ -1,13 +1,17 @@
 {
   "name": "vssr",
   "version": "0.1.0",
-  "description": "",
+  "description": "React SSR with support for browser globals/window.",
   "main": "index.js",
   "scripts": {
+    "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "ssr"
+    "ssr",
+    "react",
+    "browser",
+    "window"
   ],
   "author": "Joseph Harrison-Lim",
   "license": "GPL-3.0",
