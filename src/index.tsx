@@ -1,25 +1,29 @@
-const vm = require('vm');
-const fs = require('fs');
-const React = require('react');
-const ReactDOMServer = require('react-dom/server');
-const { JSDOM } = require('jsdom');
-const { join } = require('path');
-const Babel = require('@babel/core');
-const presetReact = require('@babel/preset-react').default;
-const { rollup } = require('rollup');
-const babelRollupPlugin = require('@rollup/plugin-babel').default;
-const nodeResolvePlugin = require('@rollup/plugin-node-resolve').default;
+import vm from 'vm';
+import fs from 'fs';
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import { JSDOM, DOMWindow } from 'jsdom';
+import { join } from 'path';
+import Babel from '@babel/core';
+import presetReact from '@babel/preset-react';
+import { rollup } from 'rollup';
+import babelRollupPlugin from '@rollup/plugin-babel';
+import nodeResolvePlugin from '@rollup/plugin-node-resolve';
+import { render, Text, Box } from 'ink';
+
+const rootId = 'rolledup-root';
+
 const newDom = () => {
   const dom = new JSDOM(undefined, {
     url: 'http://localhost',
   });
   const root = dom.window.document.createElement('div');
-  root.id = 'vssr-root';
+  root.id = rootId;
   dom.window.document.body.appendChild(root);
   return dom;
 }
 
-const newCtx = window => code => vm.runInNewContext(code, {
+const newCtx = (window: Window | DOMWindow) => (code: string) => vm.runInNewContext(code, {
   ...window,
   window,
   globalThis: window,
@@ -32,26 +36,26 @@ const newCtx = window => code => vm.runInNewContext(code, {
 const exampleDir = join(__dirname, 'examples');
 
 const demo = () => {
-  const demoStr = fs.readFileSync(join(exampleDir, 'demo.js'));
+  const demoStr = fs.readFileSync(join(exampleDir, 'demo.js')).toString();
   const dom = newDom();
   const ctx = newCtx(dom.window)(demoStr);
 
-  dom.window.document.getElementById('vssr-root').innerHTML = ctx;
+  dom.window.document.getElementById(rootId)!.innerHTML = ctx;
   fs.writeFileSync(join(exampleDir, 'demo.html'), dom.serialize());
 };
 
 const jsxDemo = () => {
   const { code } = Babel.transformSync(
-    fs.readFileSync(join(exampleDir, 'jsxdemo.jsx')),
+    fs.readFileSync(join(exampleDir, 'jsxdemo.jsx')).toString(),
     {
       presets: [
         presetReact
       ]
     }
-  );
+  )!;
   const dom = newDom();
-  const ctx = newCtx(dom.window)(code);
-  dom.window.document.getElementById('vssr-root').innerHTML = ctx;
+  const ctx = newCtx(dom.window)(code!);
+  dom.window.document.getElementById(rootId)!.innerHTML = ctx;
   fs.writeFileSync(join(exampleDir, 'jsxdemo.html'), dom.serialize());
 };
 
@@ -80,13 +84,16 @@ const rollupDemo = async () => {
 
   const dom = newDom();
   const ctx = newCtx(dom.window)(code);
-  dom.window.document.getElementById('vssr-root').innerHTML = ctx;
+  dom.window.document.getElementById(rootId)!.innerHTML = ctx;
   fs.writeFileSync(outputFilePath, dom.serialize());
 };
 
+const Cli = () => {
+  return (
+    <Box borderStyle="round" borderColor="magentaBright">
+      <Text>Hello World</Text>
+    </Box>
+  );
+};
 
-// demo();
-// jsxDemo();
-
-rollupDemo()
-  .catch(console.error);
+render(<Cli />);

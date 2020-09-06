@@ -2,9 +2,9 @@
   "name": "rolledup",
   "version": "0.1.0",
   "description": "React SSR with support for browser globals/window.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "node .",
+    "start": "tsc && node dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -16,17 +16,26 @@
   "author": "Joseph Harrison-Lim",
   "license": "GPL-3.0",
   "dependencies": {
+    "@babel/core": "^7.11.5",
     "@babel/preset-env": "^7.11.5",
+    "@babel/preset-react": "^7.10.4",
     "@rollup/plugin-babel": "^5.2.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
+    "ink": "^3.0.5",
     "jsdom": "^16.4.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
     "rollup": "^2.26.9"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.5",
-    "@babel/preset-react": "^7.10.4"
+    "@types/babel__core": "^7.1.9",
+    "@types/jsdom": "^16.2.4",
+    "@types/react": "^16.9.49",
+    "@types/react-dom": "^16.9.8",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "typescript": "^4.0.2"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1"
   },
   "files": [
     "index.js"
