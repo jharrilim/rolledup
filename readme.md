@@ -4,7 +4,7 @@
 
 This is SSR that actually works with browser stuff, eg. `window`.
 
-> Wow
+> Note: Currently this is just a proof-of-concept; actual implementation coming soon.
 
 ## Demo
 
