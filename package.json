@@ -1,6 +1,6 @@
 {
   "name": "rolledup",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "React SSR with support for browser globals/window.",
   "main": "dist/index.js",
   "bin": "bin/rolledup",
