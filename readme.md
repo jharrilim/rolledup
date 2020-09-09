@@ -16,3 +16,18 @@ To try it,
 $ npm i
 $ node .
 ```
+
+## CLI
+
+Right now, this has to be pointed to a directory that contains an index.js React file.
+The `index.js` file must contain a line for rendering static markup:
+
+```jsx
+ReactDOMServer.renderToStaticMarkup(<Foo />);
+```
+
+You can render it with:
+
+```sh
+rolledup ./path/to/src/dir
+```
