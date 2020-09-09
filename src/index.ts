@@ -9,7 +9,7 @@ import presetReact from '@babel/preset-react';
 import { rollup } from 'rollup';
 import babelRollupPlugin from '@rollup/plugin-babel';
 import nodeResolvePlugin from '@rollup/plugin-node-resolve';
-import { render, Text, Box } from 'ink';
+import meow from 'meow';
 
 const rootId = 'rolledup-root';
 
@@ -88,12 +88,51 @@ const rollupDemo = async () => {
   fs.writeFileSync(outputFilePath, dom.serialize());
 };
 
-const Cli = () => {
-  return (
-    <Box borderStyle="round" borderColor="magentaBright">
-      <Text>Hello World</Text>
-    </Box>
-  );
-};
+const build = async (path: string) => {
+  const build = await rollup({
+    input: join(path, 'index.js'),
+    plugins: [
+      nodeResolvePlugin({
+        extensions: ['jsx', 'js'],
+      }),
+      babelRollupPlugin({
+        babelHelpers: 'bundled',
+        cwd: path,
+        extensions: ['jsx', 'js'],
+      }),
+    ]
+  });
 
-render(<Cli />);
+  const { output: [{ code }] } = await build.generate({
+    dir: join(path, 'dist'),
+    format: 'cjs',
+  });
+
+  const dom = newDom();
+  const ctx = newCtx(dom.window)(code);
+  dom.window.document.getElementById(rootId)!.innerHTML = ctx;
+  
+  const outputFilePath = join(path, 'dist', 'index.html');
+  fs.writeFileSync(outputFilePath, dom.serialize());
+}
+
+// rollupDemo();
+
+export const main = () => {
+  const { input, flags } = meow(`
+    Description
+    Pre-renders your JSX code.
+    Usage
+    $ rolledup <input>
+    Examples
+    $ rolledup .
+  `.replace('    ', '  '), {});
+
+  const cwd = input[0] ?? process.cwd();
+  build(cwd);
+
+}
+
+if (__filename === require.main?.filename) {
+  main();
+}
